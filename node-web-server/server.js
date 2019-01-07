@@ -27,9 +27,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use((req, res, next) => {
-    res.send('Server Under Maintaince');
-});
+// app.use((req, res, next) => {
+//     res.send('Server Under Maintaince');
+//     next();
+// });
 
 app.use(express.static(__dirname + '/static'));
 
