@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 var {ObjectID} = require('mongodb');
 var {User} = require('../models/User');
-
+var {authenticate} = require('../middleware/authenticate');
 
 var port = process.env.port || 3000;
 
@@ -20,16 +20,12 @@ app.post('/users/register', (req, res) => {
         res.header('x-auth', token).send(newUser);
     }).catch((e) => {
         res.status(400).send(e);
-    })
-    
-    // }).then((token) => {
-    // newUser.save().then(() => {
-    //     return 
-    //     res.header('x-auth', token).send(newUser);
-    // }).catch((e) => {
-    //     res.status(400).send(e);
-    // });
+    });
 });
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
+});
+
 app.listen(port, () => {
     console.log(`Server is up on PORT: ${port}`);
 })
